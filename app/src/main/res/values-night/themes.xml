@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme with NoActionBar -->
+    <style name="Theme.Red" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Sunset Red Theme -->
+        <item name="colorPrimary">#FF4500</item> <!-- Sunset Red -->
+        <item name="colorPrimaryVariant">#E63900</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">#FF7043</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="android:statusBarColor" tools:targetApi="l">#E63900</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+</resources>
