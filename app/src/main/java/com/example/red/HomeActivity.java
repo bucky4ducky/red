@@ -4,9 +4,23 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Shader;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,45 +29,54 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, DashboardAdapter.ItemClickListener {
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ProgressDialog progressDialog;
     private DashboardAdapter dashboardAdapter;
-    private ArrayList<DashboardItem> dashboardItems = new ArrayList<>();
+    private ArrayList<DashboardItem> dashboardItems;
+    private ImageView navProfileImage;
+    private TextView navName;
+    private int logoutMenuItemId = -1;
+
+    private Map<Integer, JSONObject> menuDataMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // Setup toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Setup navigation drawer
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar,
@@ -62,61 +85,81 @@ public class HomeActivity extends AppCompatActivity
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        // Setup RecyclerView
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Loading...");
+
+        View headerView = navigationView.getHeaderView(0);
+        navProfileImage = headerView.findViewById(R.id.nav_image);
+        navName = headerView.findViewById(R.id.nav_name);
+
         RecyclerView recyclerView = findViewById(R.id.dashboardRecycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+
+        dashboardItems = new ArrayList<>();
         dashboardAdapter = new DashboardAdapter(this, dashboardItems);
         recyclerView.setAdapter(dashboardAdapter);
+        dashboardAdapter.setClickListener(this); // Set HomeActivity as the click listener
 
-        // Load data
-        loadDashboard();
+        loadUserProfile();
+        loadStaticDashboardItems(); // Load the specific four items for the cube layout
         loadMenuFromApi();
     }
 
-    private void loadDashboard() {
-        progressDialog = ProgressDialog.show(this, "", "Loading dashboard...");
-
-        JsonObjectRequest request = new JsonObjectRequest(
-                Request.Method.GET,
-                Constants.DASHBOARD_URL,
-                null,
-                response -> {
-                    try {
-                        JSONArray items = response.getJSONObject("data")
-                                .getJSONArray("mobileDashboardDetailDto");
-
-                        dashboardItems.clear();
-                        for (int i = 0; i < items.length(); i++) {
-                            JSONObject item = items.getJSONObject(i);
-                            dashboardItems.add(new DashboardItem(
-                                    item.getString("buttonCaption"),
-                                    item.getString("icon")
-                            ));
-                        }
-                        dashboardAdapter.notifyDataSetChanged();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    } finally {
-                        progressDialog.dismiss();
-                    }
-                },
-                error -> {
-                    progressDialog.dismiss();
-                    Toast.makeText(this, "Dashboard load failed", Toast.LENGTH_SHORT).show();
-                }
-        ) {
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + getToken());
-                return headers;
-            }
-        };
-
-        ApiRequest.getInstance(this).addToRequestQueue(request);
+    private void showProgressDialog(String message) {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setCancelable(false);
+        }
+        progressDialog.setMessage(message);
+        progressDialog.show();
     }
 
+    private void dismissProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
+    private void loadUserProfile() {
+        SharedPreferences prefs = getSharedPreferences(Constants.PREF_NAME, MODE_PRIVATE);
+        String profilePicUrl = prefs.getString("profilePic", "");
+        String name = prefs.getString("name", "");
+
+        if (navName != null) {
+            navName.setText(name);
+        }
+
+        if (!profilePicUrl.isEmpty() && navProfileImage != null) {
+            Picasso.get().load(profilePicUrl)
+                    .transform(new CircleTransform())
+                    .into(navProfileImage);
+        }
+    }
+
+    // This method now uses the DashboardItem constructor with iconResId
+    private void loadStaticDashboardItems() {
+        dashboardItems.clear();
+
+        // Using iconResId for the 2x2 grid items with ripple effect
+        dashboardItems.add(new DashboardItem("New", R.drawable.ic_baseline_person_add_24, 1));
+        dashboardItems.add(new DashboardItem("Draft", R.drawable.ic_baseline_edit_note_24, 2));
+        dashboardItems.add(new DashboardItem("Pending FIs", R.drawable.ic_baseline_file_copy_24, 3));
+        dashboardItems.add(new DashboardItem("Rejected", R.drawable.ic_baseline_block_24, 4));
+
+        // Example of adding an item that *might* come from an API and use a URL
+        // If you had other dashboard items fetched from an API, you'd add them here like this:
+        // dashboardItems.add(new DashboardItem("Some API Item", "http://example.com/icon.png", 5));
+
+
+        dashboardAdapter.notifyDataSetChanged();
+    }
+
+
     private void loadMenuFromApi() {
+        showProgressDialog("Loading menu...");
+        menuDataMap.clear();
+
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
                 Constants.MENU_URL,
@@ -127,58 +170,168 @@ public class HomeActivity extends AppCompatActivity
                         Menu menu = navigationView.getMenu();
                         menu.clear();
 
-                        // Define menu order
-                        Map<String, Integer> menuOrder = new HashMap<String, Integer>() {{
-                            put("Home", 1);
-                            put("Identity Card", 2);
-                            put("Verification History", 3);
-                            put("Assign/Transfer FIs", 4);
-                            put("My Payout", 5);
-                            put("Change Password", 6);
-                            put("Logout", 7);
-                        }};
+                        String[] orderedTitles = {
+                                "Home", "Identity Card", "Verification History", "Assign/Transfer FIs",
+                                "My Payout", "Change Password", "Logout"
+                        };
 
-                        List<JSONObject> sortedItems = new ArrayList<>();
+                        Map<String, JSONObject> tempMap = new HashMap<>();
                         for (int i = 0; i < menuItems.length(); i++) {
-                            sortedItems.add(menuItems.getJSONObject(i));
+                            JSONObject item = menuItems.getJSONObject(i);
+                            tempMap.put(item.getString("name"), item);
                         }
 
-                        Collections.sort(sortedItems, (a, b) -> {
-                            try {
-                                String titleA = a.getString("name");
-                                String titleB = b.getString("name");
-                                return menuOrder.getOrDefault(titleA, 99) -
-                                        menuOrder.getOrDefault(titleB, 99);
-                            } catch (JSONException e) {
-                                return 0;
-                            }
-                        });
+                        for (String title : orderedTitles) {
+                            JSONObject item = tempMap.get(title);
+                            if (item != null) {
+                                int menuId = item.getInt("menuId");
+                                menuDataMap.put(menuId, item);
 
-                        for (JSONObject item : sortedItems) {
-                            String title = item.getString("name");
-                            int menuId = item.getInt("menuId");
-                            String iconUrl = item.getString("icon");
+                                MenuItem menuItem = menu.add(Menu.NONE, menuId, Menu.NONE, title);
+                                if (title.equals("Logout")) {
+                                    logoutMenuItemId = menuId;
+                                }
 
-                            MenuItem menuItem = menu.add(Menu.NONE, menuId, Menu.NONE, title);
-                            // Optionally set a placeholder icon here:
-                            // menuItem.setIcon(R.drawable.ic_placeholder);
-
-                            if (iconUrl != null && !iconUrl.isEmpty()) {
-                                Picasso.get()
-                                        .load(iconUrl)
-                                        .into(new MenuIconTarget(this, menuItem));
+                                String iconUrl = item.optString("icon", "");
+                                if (!iconUrl.isEmpty()) {
+                                    // Picasso.get().load(iconUrl).into(new MenuIconTarget(this, menuItem));
+                                }
                             }
                         }
-
-                        navigationView.setNavigationItemSelectedListener(this);
-
                     } catch (JSONException e) {
-                        e.printStackTrace();
-                        Toast.makeText(this, "Error loading menu", Toast.LENGTH_SHORT).show();
+                        handleApiError(e, "Menu");
+                    } finally {
+                        dismissProgressDialog();
                     }
                 },
-                error -> Toast.makeText(this, "Menu load failed", Toast.LENGTH_SHORT).show()
+                error -> {
+                    handleApiError(error, "Menu");
+                    dismissProgressDialog();
+                }
         ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return getAuthHeaders();
+            }
+        };
+
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
+
+        ApiRequest.getInstance(this).addToRequestQueue(request);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int clickedMenuId = item.getItemId();
+        JSONObject menuItemData = menuDataMap.get(clickedMenuId);
+
+        if (menuItemData != null) {
+            boolean isWebView = menuItemData.optBoolean("isWebView", false);
+            String title = item.getTitle().toString();
+
+            if (isWebView) {
+                fetchWebViewUrlAndOpen(Integer.toString(clickedMenuId), title);
+            } else if (clickedMenuId == logoutMenuItemId) {
+                logout();
+            } else {
+                Toast.makeText(this, title + " clicked", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    // Implementation of DashboardAdapter.ItemClickListener
+    @Override
+    public void onItemClick(View view, DashboardItem item) {
+        // This method is called when a dashboard item is clicked
+        Toast.makeText(this, "Dashboard item clicked: " + item.getTitle(), Toast.LENGTH_SHORT).show();
+
+        // Example: If certain dashboard items should open a WebView, handle it here
+        // based on their menuId. This assumes your static items might also have
+        // associated WebView URLs (e.g., Identity Card, Verification History).
+        JSONObject menuItemData = menuDataMap.get(item.getMenuId());
+        if (menuItemData != null) {
+            boolean isWebView = menuItemData.optBoolean("isWebView", false);
+            if (isWebView) {
+                fetchWebViewUrlAndOpen(String.valueOf(item.getMenuId()), item.getTitle());
+            } else {
+                // Handle non-WebView dashboard item clicks if necessary
+                Toast.makeText(this, "Non-WebView dashboard item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            // Handle cases where the dashboard item's menuId is not found in menuDataMap
+            Toast.makeText(this, "No specific action defined for " + item.getTitle(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private void fetchWebViewUrlAndOpen(String itemId, String title) {
+        showProgressDialog("Loading " + title + "...");
+        String url = Constants.BASE_URL + "api/MobileAppMenu/GetWebViewUrl?MenuId=1" + itemId;
+
+        Log.d("WebViewDebug", "Requesting actual WebView URL from API: " + url);
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                response -> {
+                    try {
+                        Log.d("WebViewDebug", "API Response for GetWebViewUrl: " + response.toString());
+
+                        JSONObject dataObj = response.optJSONObject("data");
+                        if (dataObj == null) {
+                            Toast.makeText(this, "No URL found in API response for " + title, Toast.LENGTH_SHORT).show();
+                            Log.e("WebViewDebug", "Data object is null in GetWebViewUrl response.");
+                            return;
+                        }
+
+                        String finalUrl = dataObj.optString("url", "").trim();
+                        Log.d("WebViewDebug", "Extracted final URL from API: '" + finalUrl + "'");
+
+                        if (finalUrl.isEmpty()) {
+                            Toast.makeText(this, "Received empty URL from API for " + title, Toast.LENGTH_SHORT).show();
+                            Log.e("WebViewDebug", "Received empty URL after extraction.");
+                            return;
+                        }
+
+                        try {
+                            URI uri = new URI(finalUrl);
+                            finalUrl = uri.toString();
+                            Log.d("WebViewDebug", "Sanitized final URL: '" + finalUrl + "'");
+                        } catch (URISyntaxException e) {
+                            Toast.makeText(this, "Invalid URL format received from API for " + title, Toast.LENGTH_SHORT).show();
+                            Log.e("WEBVIEW", "Invalid URL syntax received from API: " + finalUrl, e);
+                            return;
+                        }
+
+                        if (Patterns.WEB_URL.matcher(finalUrl).matches()) {
+                            Intent intent = new Intent(this, WebViewActivity.class);
+                            intent.putExtra("url", finalUrl);
+                            intent.putExtra("title", title);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(this, "Malformed URL after validation: " + finalUrl, Toast.LENGTH_SHORT).show();
+                            Log.e("WEBVIEW", "Malformed URL after validation: " + finalUrl);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(this, "Failed to open WebView for " + title + " (response parsing error)", Toast.LENGTH_SHORT).show();
+                        Log.e("WebViewDebug", "Error parsing GetWebViewUrl response: " + e.getMessage(), e);
+                    } finally {
+                        dismissProgressDialog();
+                    }
+                },
+                error -> {
+                    error.printStackTrace();
+                    Toast.makeText(this, "Failed to fetch URL from server for " + title + " (network error)", Toast.LENGTH_SHORT).show();
+                    Log.e("WebViewDebug", "Volley error fetching GetWebViewUrl: " + error.getMessage(), error);
+                    dismissProgressDialog();
+                }) {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
@@ -188,46 +341,48 @@ public class HomeActivity extends AppCompatActivity
             }
         };
 
-        ApiRequest.getInstance(this).addToRequestQueue(request);
+        Volley.newRequestQueue(this).add(request);
     }
 
-    private void logout() {
-        getSharedPreferences(Constants.PREF_NAME, MODE_PRIVATE).edit().clear().apply();
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
+    private Map<String, String> getAuthHeaders() {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + getToken());
+        headers.put("secret-key", Constants.SECRET_KEY);
+        headers.put("Content-Type", "application/json");
+        return headers;
     }
 
     private String getToken() {
-        return getSharedPreferences(Constants.PREF_NAME, MODE_PRIVATE)
-                .getString("token", "");
+        SharedPreferences prefs = getSharedPreferences(Constants.PREF_NAME, MODE_PRIVATE);
+        return prefs.getString("token", "");
+    }
+
+    private void logout() {
+        Toast.makeText(this, "Logging out...", Toast.LENGTH_SHORT).show();
+        getSharedPreferences(Constants.PREF_NAME, MODE_PRIVATE).edit().clear().apply();
+        // startActivity(new Intent(this, LoginActivity.class));
+        // finish();
+    }
+
+    private void handleApiError(Exception error, String source) {
+        Toast.makeText(this, source + " error", Toast.LENGTH_SHORT).show();
+        Log.e("API_ERROR", source + " failed", error);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
     protected void onDestroy() {
-        ApiRequest.getInstance(this).cancelAll();
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
-        }
+        dismissProgressDialog();
         super.onDestroy();
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
 
-        switch (id) {
-            case 1: // Example: Home
-                Toast.makeText(this, "Home clicked", Toast.LENGTH_SHORT).show();
-                break;
-            case 7: // Logout
-                logout();
-                break;
-            default:
-                Toast.makeText(this, item.getTitle() + " clicked", Toast.LENGTH_SHORT).show();
-                break;
-        }
-
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
-    }
 }

@@ -1,16 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
+    <!-- Primary Color Palette for Dark Theme -->
+    <color name="primary_500">#BF360C</color> <!-- Dark Orange/Brown -->
+    <color name="primary_700">#8D2A09</color> <!-- Even Darker Orange -->
+    <color name="primary_200">#FF7043</color> <!-- Slightly brighter for contrast -->
 
-    <!-- Base application theme with NoActionBar -->
-    <style name="Theme.Red" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Sunset Red Theme -->
-        <item name="colorPrimary">#FF4500</item> <!-- Sunset Red -->
-        <item name="colorPrimaryVariant">#E63900</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorSecondary">#FF7043</item>
-        <item name="colorOnSecondary">#FFFFFF</item>
-        <item name="android:statusBarColor" tools:targetApi="l">#E63900</item>
-        <item name="android:windowLightStatusBar">false</item>
-    </style>
+    <!-- Accent Color Palette for Dark Theme -->
+    <color name="accent_500">#FFD54F</color> <!-- Lighter Amber for contrast -->
+    <color name="accent_700">#FFC107</color> <!-- Original Amber can still work -->
+    <color name="accent_200">#FFEB3B</color> <!-- Brighter Amber -->
 
+    <!-- Text Colors for Dark Theme -->
+    <color name="text_dark">#E0E0E0</color>   <!-- Light Gray (main text) -->
+    <color name="text_light">#BDBDBD</color>   <!-- Medium Light Gray (hint text, secondary) -->
+    <color name="text_white">#212121</color>   <!-- Dark Gray (if text needs to be 'dark' on very light elements) -->
+
+    <!-- Background Colors for Dark Theme -->
+    <color name="background_light">#121212</color> <!-- Deep Dark Gray (main background, standard dark mode background) -->
+    <color name="background_white">#1E1E1E</color> <!-- Slightly lighter dark gray (card backgrounds, primary surfaces) -->
+    <color name="card_background">#1E1E1E</color>
+
+    <!-- Specific UI element colors for Dark Theme -->
+    <color name="edittext_border">#333333</color> <!-- Darker border for contrast -->
+    <color name="sunset_orange">@color/primary_500</color> <!-- Use primary_500 for button tint -->
+
+    <!-- Nav Drawer Colors for Dark Theme -->
+    <color name="nav_header_background_start">#1F1F1F</color>
+    <color name="nav_header_background_end">#2F2F2F</color>
+    <color name="nav_icon_color_light">#BDBDBD</color> <!-- Specific icon color in dark mode -->
+    <color name="nav_text_color_light">#E0E0E0</color> <!-- Specific text color in dark mode -->
+    <color name="nav_item_selected_bg_light">#333333</color> <!-- Dark gray for selected item -->
+
+    <!-- Ripple Colors for Dark Theme -->
+    <color name="ripple_color">#004D40</color> <!-- Dark Teal -->
+    <color name="ripple_highlight">#00796B</color> <!-- Milder Teal -->
 </resources>
