@@ -1,84 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="@color/background_light"> <!-- Using defined background color -->
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <EditText
+        android:id="@+id/edtEmployeeCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="@dimen/spacing_large"> <!-- Using defined spacing -->
+        android:hint="Employee Code"
+        android:inputType="textEmailAddress" />
 
-        <ImageView
-            android:id="@+id/profile_image"
-            android:layout_width="@dimen/profile_image_size"
-            android:layout_height="@dimen/profile_image_size"
-            android:layout_marginBottom="@dimen/profile_image_margin_bottom"
-            android:src="@drawable/default_profile"
-            android:scaleType="centerCrop"
-            app:tint="?attr/colorPrimaryVariant"/> <!-- Tinting placeholder -->
+    <EditText
+        android:id="@+id/edtPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:inputType="textPassword" />
 
-        <EditText
-            android:id="@+id/edtEmployeeCode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Employee Code"
-            android:drawableStart="@drawable/ic_user"
-            android:drawablePadding="@dimen/input_drawable_padding"
-            android:background="@drawable/edittext_bg"
-            android:padding="@dimen/input_padding"
-        android:layout_marginBottom="@dimen/spacing_medium"
-        android:inputType="textEmailAddress"
-        android:textColor="@color/text_dark"
-        android:textColorHint="@color/text_light"
-        android:textSize="16sp" />
-
-        <!-- Password field with inline toggle -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_large">
-
-            <EditText
-                android:id="@+id/edtPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Password"
-                android:drawableStart="@drawable/ic_password"
-                android:drawablePadding="@dimen/input_drawable_padding"
-                android:background="@drawable/edittext_bg"
-            android:padding="@dimen/input_padding"
-            android:inputType="textPassword"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:textColor="@color/text_dark"
-            android:textColorHint="@color/text_light"
-            android:textSize="16sp" />
-
-            <ImageView
-                android:id="@+id/ivTogglePassword"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/input_padding"
-                android:src="@drawable/ic_visibility_off"
-                android:contentDescription="Toggle password visibility"
-                android:clickable="true"
-                android:focusable="true"
-                app:tint="@color/text_light" />
-        </RelativeLayout>
-
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Login"
-            style="@style/Widget.App.Button" />
-    </LinearLayout>
-</ScrollView>
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login" />
+</LinearLayout>

@@ -1,54 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/spacing_small"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="6dp"
-    app:cardBackgroundColor="@color/card_background"
-    app:strokeColor="@color/edittext_border"
-    app:strokeWidth="1dp">
+    android:padding="16dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="@dimen/spacing_medium">
+    <ImageView
+        android:id="@+id/dashboard_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/default_profile"
+        android:scaleType="centerCrop" />
 
-        <RelativeLayout
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:layout_marginBottom="@dimen/spacing_small">
-
-            <com.example.red.WaterRippleView
-                android:id="@+id/item_ripple_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <ImageView
-
-                  android:id="@+id/dashboard_icon"
-             android:layout_width="48dp"
-                  android:layout_height="48dp"
-              android:layout_centerInParent="true"
-               android:src="@drawable/ic_baseline_person_add_24"
-                android:tint="?attr/colorPrimary"
-                 android:contentDescription="Item Icon" />
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/dashboard_title"
+    <TextView
+        android:id="@+id/dashboard_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Item Title"
-        android:textColor="@color/text_dark"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:gravity="center" />
+        android:text="Dashboard Title"
+        android:textSize="18sp"
+        android:textColor="#000" />
+</LinearLayout>
 
-    </LinearLayout>
-</com.google.android.material.card.MaterialCardView>

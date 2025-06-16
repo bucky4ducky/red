@@ -1,58 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/nav_header_height"
-    android:padding="@dimen/spacing_medium"
-    android:background="@drawable/gradient_nav_header"
-    android:theme="@style/ThemeOverlay.MaterialComponents.Dark">
+    android:layout_height="160dp"
+    android:gravity="center"
+    android:background="@color/colorPrimary"
+    android:padding="16dp">
 
-    <LinearLayout
-        android:id="@+id/profile_container"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/nav_header_profile_container_height"
-        android:layout_alignParentBottom="true"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+    <ImageView
+        android:id="@+id/nav_image"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_launcher_round"
+        android:background="@drawable/circle_bg"
+        android:padding="2dp" />
 
-        <ImageView
-            android:id="@+id/nav_image"
-            android:layout_width="@dimen/nav_header_image_width"
-            android:layout_height="@dimen/nav_header_image_height"
-            android:layout_marginEnd="@dimen/spacing_medium"
-            android:background="@drawable/circle_bg"
-            android:scaleType="centerCrop"
-            android:src="@drawable/default_profile"
-            android:contentDescription="@string/nav_header_desc"
-            app:tint="@color/text_white" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/nav_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:text="@string/nav_header_title"
-                android:textColor="@color/text_white"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
-
-            <TextView
-                android:id="@+id/nav_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nav_header_subtitle"
-                android:textColor="@color/text_white"
-                android:textSize="14sp"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-</RelativeLayout>
+    <TextView
+        android:id="@+id/nav_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User Name"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:layout_marginTop="8dp"/>
+</LinearLayout>

@@ -1,74 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- Base application theme. Will adapt to light/dark mode. -->
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme with NoActionBar -->
     <style name="Theme.Red" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Colors will be resolved from res/values/colors.xml or res/values-night/colors.xml -->
-        <item name="colorPrimary">@color/primary_500</item>
-        <item name="colorPrimaryVariant">@color/primary_700</item>
-        <item name="colorOnPrimary">@color/text_white</item>
-
-        <item name="colorSecondary">@color/accent_500</item>
-        <item name="colorSecondaryVariant">@color/accent_700</item>
-        <item name="colorOnSecondary">@color/text_dark</item>
-
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <item name="android:navigationBarColor">@color/background_white</item>
-
-        <!-- General text appearance - will use text_dark/light based on mode -->
-        <item name="android:textColor">@color/text_dark</item>
-        <item name="android:fontFamily">sans-serif</item>
-
-        <!-- Button style -->
-        <item name="materialButtonStyle">@style/Widget.App.Button</item>
-
-        <!-- EditText style -->
-        <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
-
-        <!-- Custom navigation view styles - pointing to specific color/text resources that change by theme -->
-        <item name="textAppearanceListItem">@style/NavigationText</item>
-        <item name="textAppearanceListItemSmall">@style/NavigationText</item>
-        <item name="materialCardViewStyle">@style/Widget.MaterialComponents.CardView</item> <!-- Ensure this is present -->
-    </style>
-
-    <style name="Theme.Red.NoActionBar" parent="Theme.Red">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="Theme.Red.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
-
-    <style name="Theme.Red.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
-
-    <!-- Custom Button Style -->
-    <style name="Widget.App.Button" parent="Widget.MaterialComponents.Button">
-        <item name="android:backgroundTint">@color/sunset_orange</item>
-        <item name="android:textColor">@color/text_white</item>
-        <item name="android:padding">@dimen/button_padding</item>
-        <item name="cornerRadius">@dimen/button_corner_radius</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:letterSpacing">0.05</item>
-        <item name="android:stateListAnimator">@null</item> <!-- Remove default button elevation animation -->
-        <item name="elevation">4dp</item>
-    </style>
-
-    <!-- Navigation Drawer Text Appearance -->
-    <style name="NavigationText" parent="TextAppearance.MaterialComponents.Body2">
-        <item name="android:textColor">@color/nav_text_color_light</item> <!-- Crucial for DayNight theming -->
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <!-- Navigation Drawer Item Shape -->
-    <style name="NavigationShape" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/input_corner_radius</item>
-    </style>
-
-    <!-- CardView Style (if you use CardViews for Dashboard items) -->
-    <style name="CustomCardView" parent="Widget.MaterialComponents.CardView">
-        <item name="cardBackgroundColor">@color/card_background</item>
-        <item name="cardCornerRadius">12dp</item>
-        <item name="cardElevation">4dp</item>
-        <item name="contentPadding">16dp</item>
+        <!-- Sunset Red Theme -->
+        <item name="colorPrimary">#FF4500</item> <!-- Sunset Red -->
+        <item name="colorPrimaryVariant">#E63900</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">#FF7043</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="android:statusBarColor" tools:targetApi="l">#E63900</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 
 </resources>
