@@ -44,18 +44,14 @@ public class WaterRippleView extends View {
         ripplePaint.setStyle(Paint.Style.STROKE);
         ripplePaint.setStrokeWidth(dpToPx(STROKE_WIDTH_DP)); // Convert DP to pixels
 
-        // Load colors from theme resources (will automatically pick light/dark)
-        // Ensure R.color.ripple_color and R.color.ripple_highlight are defined in your colors.xml files
+
         rippleBaseColor = ContextCompat.getColor(getContext(), R.color.ripple_color);
         rippleHighlightColor = ContextCompat.getColor(getContext(), R.color.ripple_highlight);
 
-        // Do not start animation immediately on init if it's placed in a RecyclerView item.
-        // It should be started/managed when the item becomes visible or is clicked.
-        // For a continuous background ripple, starting here is fine.
         startRippleAnimation();
     }
 
-    // Convert DP to pixels
+
     private float dpToPx(float dp) {
         return dp * getResources().getDisplayMetrics().density;
     }
@@ -73,11 +69,9 @@ public class WaterRippleView extends View {
         animator.addUpdateListener(animation -> {
             float animatedValue = (float) animation.getAnimatedValue();
 
-            // Ripple radius grows from 0 to max dimension of the view (or desired max)
+
             rippleRadius = animatedValue * Math.max(getWidth(), getHeight()) / 2f;
 
-            // Alpha fades out as it grows
-            // The ripple appears, stays fully opaque for half the animation, then fades out.
             if (animatedValue < 0.5f) {
                 rippleAlpha = MAX_RIPPLE_ALPHA;
             } else {

@@ -1,11 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Dark theme overrides. -->
+    <!-- Night theme for the Red app -->
     <style name="Theme.Red" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Any attributes defined here will override those in the base themes.xml
-             when the device is in dark mode.
-             For example, if you wanted a different default background drawable in dark mode:
-             <item name="android:windowBackground">@drawable/dark_mode_background</item>
-        -->
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primary_500</item>
+        <item name="colorPrimaryVariant">@color/primary_700</item>
+        <item name="colorOnPrimary">@color/text_white</item>
+
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/accent_500</item>
+        <item name="colorSecondaryVariant">@color/accent_700</item>
+        <item name="colorOnSecondary">@color/text_dark</item>
+
+        <!-- Status bar and navigation bar -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:navigationBarColor">@color/background_white</item>
+
+        <!-- Text styling -->
+        <item name="android:textColor">@color/text_dark</item>
+        <item name="android:fontFamily">sans-serif</item>
+
+        <!-- Material Component overrides -->
+        <item name="materialButtonStyle">@style/Widget.App.Button</item>
+        <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
+
+        <!-- Navigation Drawer styling -->
+        <item name="textAppearanceListItem">@style/NavigationText</item>
+        <item name="textAppearanceListItemSmall">@style/NavigationText</item>
+
+        <!-- CardView style -->
+        <item name="materialCardViewStyle">@style/CustomCardView</item>
+    </style>
+
+    <!-- Optional: no-action-bar variant for dark mode -->
+    <style name="Theme.Red.NoActionBar" parent="Theme.Red">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 </resources>

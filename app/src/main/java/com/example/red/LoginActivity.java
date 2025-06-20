@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar; // For progress indicator
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +40,9 @@ public class LoginActivity extends AppCompatActivity {
     private ImageView ivTogglePassword;
     private ProgressBar progressBar;
 
+    private View btnRegisterDevice;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,10 +51,29 @@ public class LoginActivity extends AppCompatActivity {
         edtEmployeeCode = findViewById(R.id.edtEmployeeCode);
         edtPassword = findViewById(R.id.edtPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        btnRegisterDevice = findViewById(R.id.btnRegisterDevice); // TextView
+
         ivTogglePassword = findViewById(R.id.ivTogglePassword);
         progressBar = findViewById(R.id.progressBar);
 
         progressBar.setVisibility(View.GONE);
+
+        btnRegisterDevice.setOnClickListener(v -> {
+            Toast.makeText(LoginActivity.this, "Clicked!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(LoginActivity.this, DeviceRegistrationActivity.class);
+            startActivity(intent);
+        });
+        btnRegisterDevice.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, DeviceRegistrationActivity.class);
+            startActivity(intent);
+        });
+
+        btnLogin.setOnClickListener(v -> attemptLogin());
+
+
+
+
+
 
         ivTogglePassword.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -62,9 +86,9 @@ public class LoginActivity extends AppCompatActivity {
             edtPassword.setSelection(edtPassword.getText().length());
             return true;
         });
-
-        btnLogin.setOnClickListener(v -> attemptLogin());
     }
+
+
 
     private void attemptLogin() {
         String employeeCode = edtEmployeeCode.getText().toString().trim();
@@ -160,12 +184,18 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("secret-key", Constants.SECRET_KEY);  // ✅ Required
+                headers.put("secret-key", Constants.SECRET_KEY);
                 headers.put("Content-Type", "application/json");
                 return headers;
             }
 
         };
+
+        btnRegisterDevice.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, DeviceRegistrationActivity.class);
+            startActivity(intent);
+        });
+
 
         request.setRetryPolicy(new DefaultRetryPolicy(
                 10000,

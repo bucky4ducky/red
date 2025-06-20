@@ -8,7 +8,6 @@ import android.graphics.Shader;
 
 import com.squareup.picasso.Transformation;
 
-// This class is used with Picasso to transform images into circles.
 public class CircleTransform implements Transformation {
     @Override
     public Bitmap transform(Bitmap source) {
@@ -19,7 +18,7 @@ public class CircleTransform implements Transformation {
 
         Bitmap squaredBitmap = Bitmap.createBitmap(source, x, y, size, size);
         if (squaredBitmap != source) {
-            source.recycle(); // Recycle original bitmap if a new one was created
+            source.recycle();
         }
 
         Bitmap bitmap = Bitmap.createBitmap(size, size, source.getConfig());
@@ -33,13 +32,13 @@ public class CircleTransform implements Transformation {
         float r = size / 2f;
         canvas.drawCircle(r, r, r, paint);
 
-        squaredBitmap.recycle(); // Recycle the squared bitmap
+        squaredBitmap.recycle();
 
         return bitmap;
     }
 
     @Override
     public String key() {
-        return "circle"; // Unique key for this transformation
+        return "circle";
     }
 }

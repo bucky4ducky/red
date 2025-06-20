@@ -78,6 +78,15 @@
         <item name="cardElevation">4dp</item>
         <item name="contentPadding">16dp</item>
     </style>
+    <style name="Widget.App.SecondaryButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/primary_500</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:backgroundTint">@android:color/transparent</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
 
     <!-- Gradient drawable for side_nav_bar - defined directly here as it's a simple shape -->
     <drawable name="side_nav_bar_drawable">

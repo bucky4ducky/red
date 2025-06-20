@@ -6,6 +6,7 @@
     android:fillViewport="true"
     android:background="@color/background_light">
 
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -80,7 +81,6 @@
             android:text="Login"
             style="@style/Widget.App.Button" />
 
-        <!-- Progress Bar Added Here -->
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
@@ -89,6 +89,21 @@
             android:visibility="gone"
             android:indeterminateTint="?attr/colorPrimaryVariant"
             android:layout_gravity="center_horizontal" />
+        <TextView
+            android:id="@+id/btnRegisterDevice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register this device"
+            android:textColor="@color/primary_500"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp"
+            android:padding="8dp" />
+
 
     </LinearLayout>
 </ScrollView>

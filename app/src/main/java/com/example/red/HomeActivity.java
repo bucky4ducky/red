@@ -44,7 +44,9 @@ import org.json.JSONObject;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity
@@ -60,6 +62,7 @@ public class HomeActivity extends AppCompatActivity
     private int logoutMenuItemId = -1;
 
     private Map<Integer, JSONObject> menuDataMap = new HashMap<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +84,8 @@ public class HomeActivity extends AppCompatActivity
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+
+
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -111,7 +116,6 @@ public class HomeActivity extends AppCompatActivity
         loadDashboardFromApi();
 
     }
-
     private boolean isLoggedIn() {
         SharedPreferences prefs = getSharedPreferences(Constants.PREF_NAME, MODE_PRIVATE);
         String token = prefs.getString("token", "");
@@ -132,19 +136,14 @@ public class HomeActivity extends AppCompatActivity
             progressDialog.dismiss();
         }
     }
-
     private void loadUserProfile() {
         SharedPreferences prefs = getSharedPreferences(Constants.PREF_NAME, MODE_PRIVATE);
         String profilePicUrl = prefs.getString("profilePic", "");
         String name = prefs.getString("name", "");
-        String email = prefs.getString("emailAddress", "");
 
         if (navName != null) {
             navName.setText(name);
         }
-
-
-
         if (!profilePicUrl.isEmpty() && navProfileImage != null) {
             Picasso.get().load(profilePicUrl)
                     .transform(new CircleTransform())
@@ -155,10 +154,6 @@ public class HomeActivity extends AppCompatActivity
             navProfileImage.setImageResource(R.drawable.ic_profile_placeholder);
         }
     }
-
-
-
-
     private void loadMenuFromApi() {
         showProgressDialog("Loading menu...");
         menuDataMap.clear();
@@ -170,41 +165,43 @@ public class HomeActivity extends AppCompatActivity
                 response -> {
                     try {
                         JSONArray menuItems = response.getJSONArray("data");
+                        List<JSONObject> sortedItems = new ArrayList<>();
+
+                        for (int i = 0; i < menuItems.length(); i++) {
+                            sortedItems.add(menuItems.getJSONObject(i));
+                        }
+
+                        Collections.sort(sortedItems, (a, b) -> {
+                            try {
+                                return Integer.compare(a.getInt("orderNo"), b.getInt("orderNo"));
+                            } catch (JSONException e) {
+                                return 0;
+                            }
+                        });
+
                         Menu menu = navigationView.getMenu();
                         menu.clear();
 
-                        String[] orderedTitles = {
-                                "Home", "Identity Card", "Verification History", "Assign/Transfer FIs",
-                                "My Payout", "Change Password", "Logout"
-                        };
+                        for (JSONObject item : sortedItems) {
+                            String title = item.getString("name");
+                            int menuId = item.getInt("menuId");
+                            String iconUrl = item.optString("icon", "");
 
-                        Map<String, JSONObject> tempMap = new HashMap<>();
-                        for (int i = 0; i < menuItems.length(); i++) {
-                            JSONObject item = menuItems.getJSONObject(i);
-                            tempMap.put(item.getString("name"), item);
-                        }
+                            menuDataMap.put(menuId, item);
 
-                        for (String title : orderedTitles) {
-                            JSONObject item = tempMap.get(title);
-                            if (item != null) {
-                                int menuId = item.getInt("menuId");
-                                menuDataMap.put(menuId, item);
+                            MenuItem menuItem = menu.add(Menu.NONE, menuId, Menu.NONE, title);
 
-                                MenuItem menuItem = menu.add(Menu.NONE, menuId, Menu.NONE, title);
-                                if (title.equals("Logout")) {
-                                    logoutMenuItemId = menuId;
-                                }
+                            if ("Logout".equalsIgnoreCase(title)) {
+                                logoutMenuItemId = menuId;
+                            }
 
-                                String iconUrl = item.optString("icon", "");
-                                if (!iconUrl.isEmpty()) {
-                                    Picasso.get()
-                                            .load(iconUrl)
-                                            .placeholder(R.drawable.ic_profile_placeholder)
-                                            .error(R.drawable.ic_baseline_error_24)
-                                            .into(new MenuIconTarget(HomeActivity.this, menuItem));
-                                } else {
-                                    menuItem.setIcon(R.drawable.ic_baseline_home_24);
-                                }
+                            if (!iconUrl.isEmpty()) {
+                                Picasso.get()
+                                        .load(iconUrl)
+                                        .placeholder(R.drawable.ic_profile_placeholder)
+                                        .into(new MenuIconTarget(HomeActivity.this, menuItem));
+                            } else {
+                                menuItem.setIcon(R.drawable.ic_baseline_home_24);
                             }
                         }
 
@@ -234,9 +231,9 @@ public class HomeActivity extends AppCompatActivity
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
         ));
-
         ApiRequest.getInstance(this).addToRequestQueue(request);
     }
+
     private void loadDashboardFromApi() {
         showProgressDialog("Loading dashboard...");
 
@@ -318,7 +315,7 @@ public class HomeActivity extends AppCompatActivity
 
     private void fetchWebViewUrlAndOpen(String itemId, String title) {
         showProgressDialog("Loading " + title + "...");
-        String urlToFetch = Constants.BASE_URL + "api/MobileAppMenu/GetWebViewUrl?MenuId="+2;
+        String urlToFetch = Constants.BASE_URL + "api/MobileAppMenu/GetWebViewUrl?MenuId="+itemId;
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, urlToFetch, null,
                 response -> {
@@ -335,12 +332,10 @@ public class HomeActivity extends AppCompatActivity
                             return;
                         }
 
-                        // ✅ Normalize relative URLs like /MobileApp/EmployeeIDCard...
                         if (finalUrl.startsWith("/")) {
                             finalUrl = "https://mayaglobalservices.in" ;
                         }
 
-                        // ✅ Parse safely AFTER normalization
                         try {
                             URI uri = new URI(finalUrl);
                             finalUrl = uri.toASCIIString();

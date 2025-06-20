@@ -46,11 +46,10 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.View
         DashboardItem item = items.get(position);
         holder.title.setText(item.getTitle());
 
-        // Load icon from URL using Glide
         Glide.with(context)
                 .load(item.getIconUrl())
-                .placeholder(R.drawable.ic_placeholder) // Set a placeholder icon
-                .error(R.drawable.ic_error) // Set an error icon
+                .placeholder(R.drawable.ic_placeholder)
+                .error(R.drawable.ic_error)
                 .into(holder.icon);
 
         holder.itemView.setOnClickListener(v -> {

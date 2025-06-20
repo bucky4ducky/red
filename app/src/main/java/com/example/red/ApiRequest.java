@@ -46,11 +46,10 @@ public class ApiRequest {
                     try {
                         JSONObject json = new JSONObject(response);
                         JSONObject data = json.getJSONObject("data");
-                        String token = data.getString("token");  // Update key if different
+                        String token = data.getString("token");
 
-                        // Save token
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString(Constants.AUTH_TOKEN_KEY, token);
+                        editor.putString(Constants.KEY_TOKEN, token);
                         editor.apply();
 
                         listener.onResponse(response);
@@ -97,7 +96,6 @@ public class ApiRequest {
         ) {
             @Override
             public byte[] getBody() {
-                // This API doesn’t require a body. If needed, insert a blank one.
                 return "{}".getBytes();
             }
 
@@ -159,11 +157,11 @@ public class ApiRequest {
     }
 
     public String getToken() {
-        return sharedPreferences.getString(Constants.AUTH_TOKEN_KEY, "");
+        return sharedPreferences.getString(Constants.KEY_TOKEN, "");
     }
 
     public void clearTokens() {
-        sharedPreferences.edit().remove(Constants.AUTH_TOKEN_KEY).apply();
+        sharedPreferences.edit().remove(Constants.KEY_TOKEN).apply();
     }
 
     public RequestQueue getRequestQueue() {

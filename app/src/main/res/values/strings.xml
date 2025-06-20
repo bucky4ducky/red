@@ -14,4 +14,5 @@
     <string name="dashboard_title">Dashboard</string>
     <string name="icon" />
     <string name="toggle_password_visibility">Toggle password visibility</string>
+    <string name="register_device">Register Device</string>
 </resources>

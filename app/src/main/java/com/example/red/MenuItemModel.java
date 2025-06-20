@@ -18,7 +18,6 @@ public class MenuItemModel {
         this.requiresAuth = requiresAuth;
     }
 
-    // Getters only - immutable object
     public String getId() { return id; }
     public String getTitle() { return title; }
     public String getIconUrl() { return iconUrl; }

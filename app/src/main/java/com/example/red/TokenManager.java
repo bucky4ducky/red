@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 public class TokenManager {
     private static final String PREF_NAME = Constants.PREF_NAME;
-    private static final String TOKEN_KEY = Constants.AUTH_TOKEN_KEY;
+    private static final String TOKEN_KEY = Constants.KEY_TOKEN;
     private SharedPreferences prefs;
 
     public TokenManager(Context context) {
@@ -21,7 +21,6 @@ public class TokenManager {
     }
 
     public boolean isTokenValid() {
-        // Basic check; ideally check expiry via JWT decoding
         return getToken() != null && !getToken().isEmpty();
     }
 
