@@ -10,51 +10,66 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.ViewHolder> {
+    private final List<DashboardItem> items;
+    private final LayoutInflater inflater;
+    private final Context context;
+    private ItemClickListener listener;
 
-    Context context;
-    ArrayList<DashboardItem> list;
-
-    public DashboardAdapter(Context context, ArrayList<DashboardItem> list) {
+    public DashboardAdapter(Context context, List<DashboardItem> items) {
         this.context = context;
-        this.list = list;
+        this.inflater = LayoutInflater.from(context);
+        this.items = items;
+    }
+
+    public interface ItemClickListener {
+        void onItemClick(View view, DashboardItem item);
+    }
+
+    public void setClickListener(ItemClickListener listener) {
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     public DashboardAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.dashboard_item, parent, false);
+        View view = inflater.inflate(R.layout.dashboard_item_layout, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull DashboardAdapter.ViewHolder holder, int position) {
-        DashboardItem item = list.get(position);
+        DashboardItem item = items.get(position);
         holder.title.setText(item.getTitle());
 
-        if (item.getIcon() != null && !item.getIcon().isEmpty()) {
-            Picasso.get()
-                    .load(item.getIcon())
-                    .placeholder(R.drawable.ic_person)
-                    .error(R.drawable.ic_error)
-                    .into(holder.icon);
-        }
+        // Load icon from URL using Glide
+        Glide.with(context)
+                .load(item.getIconUrl())
+                .placeholder(R.drawable.ic_placeholder) // Set a placeholder icon
+                .error(R.drawable.ic_error) // Set an error icon
+                .into(holder.icon);
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onItemClick(v, item);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return items.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         ImageView icon;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.dashboard_title);
             icon = itemView.findViewById(R.id.dashboard_icon);

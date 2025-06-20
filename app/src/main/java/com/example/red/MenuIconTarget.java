@@ -32,7 +32,7 @@ public class MenuIconTarget implements Target {
     public void onBitmapFailed(Exception e, Drawable errorDrawable) {
         MenuItem item = menuItemRef.get();
         if (item != null) {
-            item.setIcon(errorDrawable);
+            item.setIcon(errorDrawable); // Set error drawable if loading fails
         }
     }
 
@@ -40,7 +40,7 @@ public class MenuIconTarget implements Target {
     public void onPrepareLoad(@Nullable Drawable placeHolderDrawable) {
         MenuItem item = menuItemRef.get();
         if (item != null && placeHolderDrawable != null) {
-            item.setIcon(placeHolderDrawable);
+            item.setIcon(placeHolderDrawable); // Set placeholder while loading
         }
     }
 }

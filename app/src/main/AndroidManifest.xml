@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,22 +15,45 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Red">
+        android:theme="@style/Theme.Red"
+        android:usesCleartextTraffic="true"
+    tools:targetApi="31">
 
-        <!-- Launcher Activity -->
-        <activity
-            android:name=".LoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+    <activity
+        android:name=".HomeActivity"
+        android:exported="true"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Red.NoActionBar">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
 
-        <!-- Home Activity -->
-        <activity
-            android:name=".HomeActivity"
-            android:exported="true" />
+    <!-- WebView Activity -->
+    <activity
+        android:name=".WebViewActivity"
+        android:exported="false"
+        android:label="Web View"
+        android:parentActivityName=".HomeActivity"
+    android:theme="@style/Theme.Red.NoActionBar" />
+
+    <activity
+        android:name=".LoginActivity"
+        android:exported="true"
+          android:label="@string/login_activity_name"
+          android:theme="@style/Theme.Red.NoActionBar">
+
+
+
+        <intent-filter>
+
+           <action android:name="android.intent.action.MAIN" />
+
+           <category android:name="android.intent.category.LAUNCHER" />
+       </intent-filter>
+    </activity>
+
     </application>
 
-</manifest>
+    </manifest>

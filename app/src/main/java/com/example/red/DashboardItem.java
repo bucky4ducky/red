@@ -1,19 +1,25 @@
 package com.example.red;
 
 public class DashboardItem {
-    private String title;
-    private String icon;
+    private final String title;
+    private final String iconUrl;
+    private final int menuId;
 
-    public DashboardItem(String title, String icon) {
+    public DashboardItem(String title, String iconUrl, int menuId) {
         this.title = title;
-        this.icon = icon;
+        this.iconUrl = iconUrl;
+        this.menuId = menuId;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public String getIcon() {
-        return icon;
+    public String getIconUrl() {
+        return iconUrl;
+    }
+
+    public int getMenuId() {
+        return menuId;
     }
 }
