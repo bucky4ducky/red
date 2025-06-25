@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_light"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center">
+
+        <EditText
+            android:id="@+id/edtEmployeeCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Employee Code"
+            android:drawablePadding="12dp"
+            android:background="@drawable/shape_edittext_bg"
+            android:padding="16dp"
+            android:inputType="text"
+            android:textColor="@color/text_dark"
+            android:textColorHint="@color/text_light"
+            android:textSize="16sp" />
+        <EditText
+            android:id="@+id/edtRemarks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Remarks"
+            android:drawablePadding="12dp"
+            android:background="@drawable/shape_edittext_bg"
+            android:padding="16dp"
+            android:inputType="text"
+            android:textColor="@color/text_dark"
+            android:textColorHint="@color/text_light"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:id="@+id/btnSubmit"
+            style="@style/Widget.App.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Register Device" />
+
+    </LinearLayout>
+</ScrollView>
