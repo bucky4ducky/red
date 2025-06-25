@@ -1,100 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Base application theme. Will adapt to light/dark mode based on system settings. -->
-    <style name="Theme.Red" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/primary_500</item>
-        <item name="colorPrimaryVariant">@color/primary_700</item>
-        <item name="colorOnPrimary">@color/text_white</item>
 
-        <!-- Secondary brand color. -->
+    <!-- Night version using same colors as Day theme -->
+
+    <style name="Theme.Red.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand colors -->
+        <item name="colorPrimary">@color/sunset_orange</item>
+        <item name="colorPrimaryVariant">@color/primary_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <!-- Secondary brand colors -->
         <item name="colorSecondary">@color/accent_500</item>
         <item name="colorSecondaryVariant">@color/accent_700</item>
         <item name="colorOnSecondary">@color/text_dark</item>
 
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Navigation bar color (Android 8.0+). -->
+        <!-- Surface and background -->
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/text_dark</item>
+
+        <!-- Status and navigation bar -->
+        <item name="android:statusBarColor">@color/sunset_orange</item>
         <item name="android:navigationBarColor">@color/background_white</item>
 
-        <!-- General text appearance. -->
-        <item name="android:textColor">@color/text_dark</item>
+        <!-- Text and font -->
+        <item name="android:textColorPrimary">@color/text_dark</item>
+        <item name="android:textColorSecondary">@color/text_light</item>
+        <item name="android:textColorHint">@color/text_hint</item>
         <item name="android:fontFamily">sans-serif</item>
 
-        <!-- Custom button style for Material Buttons. -->
+        <!-- Components -->
+        <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Primary</item>
         <item name="materialButtonStyle">@style/Widget.App.Button</item>
-
-        <!-- Custom EditText style for Material Text Input Layouts. -->
         <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
-
-        <!-- Navigation Drawer Text Appearance -->
-        <item name="textAppearanceListItem">@style/NavigationText</item>
-        <item name="textAppearanceListItemSmall">@style/NavigationText</item>
-
-        <!-- MaterialCardView style (if you use it for dashboard items directly) -->
         <item name="materialCardViewStyle">@style/Widget.MaterialComponents.CardView</item>
+
+        <!-- Dynamic colors -->
+        <item name="dynamicColorPrimary">@color/sunset_orange</item>
+        <item name="dynamicColorPrimaryDark">@color/primary_700</item>
+        <item name="dynamicColorAccent">@color/accent_500</item>
+        <item name="dynamicTextColorPrimary">@color/text_dark</item>
+        <item name="dynamicTextColorSecondary">@color/text_light</item>
+        <item name="dynamicBackground">@color/background_white</item>
+        <item name="dynamicImageTint">@color/icon_tint</item>
     </style>
 
-    <!-- Theme without ActionBar (for HomeActivity and WebViewActivity) -->
-    <style name="Theme.Red.NoActionBar" parent="Theme.Red">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <!-- App Bar Overlay for dark text on light action bar -->
-    <style name="Theme.Red.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
-
-    <!-- Popup Overlay for light text on dark action bar -->
-    <style name="Theme.Red.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
-
-    <!-- Custom Button Style -->
     <style name="Widget.App.Button" parent="Widget.MaterialComponents.Button">
-        <item name="android:backgroundTint">@color/sunset_orange</item>
-        <item name="android:textColor">@color/text_white</item>
-        <item name="android:padding">@dimen/button_padding</item>
-        <item name="cornerRadius">@dimen/button_corner_radius</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:letterSpacing">0.05</item>
-        <item name="android:stateListAnimator">@null</item> <!-- Remove default elevation animation -->
-        <item name="elevation">4dp</item>
+        <item name="android:backgroundTint">?attr/dynamicColorPrimary</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:padding">12dp</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="elevation">2dp</item>
     </style>
 
-    <!-- Style for navigation drawer menu item text -->
-    <style name="NavigationText" parent="TextAppearance.MaterialComponents.Body2">
-        <item name="android:textColor">@color/nav_text_color_light</item> <!-- Will resolve based on active theme -->
+    <style name="NavigationText" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">@color/nav_text_color_light</item>
         <item name="android:textSize">16sp</item>
     </style>
 
-    <!-- Style for navigation drawer menu item shape -->
-    <style name="NavigationShape" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/input_corner_radius</item>
-    </style>
-
-    <!-- Custom CardView Style -->
     <style name="CustomCardView" parent="Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/card_background</item>
         <item name="cardCornerRadius">12dp</item>
         <item name="cardElevation">4dp</item>
-        <item name="contentPadding">16dp</item>
-    </style>
-    <style name="Widget.App.SecondaryButton" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:textColor">@color/primary_500</item>
-        <item name="android:padding">8dp</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:backgroundTint">@android:color/transparent</item>
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="contentPadding">12dp</item>
     </style>
 
-
-    <!-- Gradient drawable for side_nav_bar - defined directly here as it's a simple shape -->
-    <drawable name="side_nav_bar_drawable">
-        <gradient
-            android:angle="135"
-            android:centerColor="@color/primary_500"
-            android:endColor="@color/nav_header_background_end"
-            android:startColor="@color/nav_header_background_start"
-            android:type="linear" />
-    </drawable>
 </resources>

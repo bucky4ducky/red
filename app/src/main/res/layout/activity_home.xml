@@ -44,7 +44,7 @@
         app:headerLayout="@layout/nav_header_main"
         app:itemTextAppearance="@style/NavigationText"
         app:itemIconTint="@color/nav_icon_color_light"
-        app:itemShapeAppearanceOverlay="@style/NavigationShape"
+        app:itemShapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.ExtraLarge"
         app:itemBackground="?attr/selectableItemBackground"
         app:itemTextColor="@color/nav_text_color_light" />
 

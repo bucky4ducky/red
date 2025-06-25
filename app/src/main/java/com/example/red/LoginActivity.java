@@ -3,11 +3,13 @@ package com.example.red;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent; // For password toggle
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -125,6 +128,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
                 Constants.LOGIN_URL,
@@ -209,4 +213,7 @@ public class LoginActivity extends AppCompatActivity {
     private String getAndroidDeviceId() {
         return Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
     }
+
+
+
 }

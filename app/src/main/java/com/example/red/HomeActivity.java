@@ -103,6 +103,7 @@ public class HomeActivity extends AppCompatActivity
         navProfileImage = headerView.findViewById(R.id.nav_image);
         navName = headerView.findViewById(R.id.nav_name);
 
+
         RecyclerView recyclerView = findViewById(R.id.dashboardRecycler);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 

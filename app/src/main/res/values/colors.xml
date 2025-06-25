@@ -1,38 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Primary Color Palette for Light Theme -->
-    <color name="primary_500">#FF5722</color> <!-- Sunset Orange -->
-    <color name="primary_700">#E64A19</color> <!-- Darker Orange -->
-    <color name="primary_200">#FFAB91</color> <!-- Lighter Orange -->
+    <color name="primary_500">#FF5722</color>
+    <color name="primary_700">#E64A19</color>
+    <color name="primary_200">#FFAB91</color>
+    <color name="text_hint">#888888</color>
+
 
     <!-- Accent Color Palette for Light Theme -->
-    <color name="accent_500">#FFC107</color> <!-- Amber -->
-    <color name="accent_700">#FFA000</color> <!-- Darker Amber -->
-    <color name="accent_200">#FFECB3</color> <!-- Lighter Amber -->
+    <color name="accent_500">#FFC107</color>
+    <color name="accent_700">#FFA000</color>
+     <color name="accent_200">#FFECB3</color>
 
     <!-- Text Colors for Light Theme -->
-    <color name="text_dark">#212121</color>   <!-- Dark Gray (main text) -->
-    <color name="text_light">#757575</color>   <!-- Medium Gray (hint text, secondary) -->
-    <color name="text_white">#FFFFFF</color>   <!-- White (for text on primary/dark backgrounds) -->
-
+    <color name="white">#FFFFFF</color>
+    <color name="icon_tint">#666666</color>
+    <color name="text_dark">#212121</color>
+    <color name="text_light">#757575</color>
+    <color name="text_white">#FFFFFF</color>
     <!-- Background Colors for Light Theme -->
-    <color name="background_light">#F5F5F5</color> <!-- Very Light Gray (main background) -->
-    <color name="background_white">#FFFFFF</color> <!-- Pure White (card backgrounds, primary surfaces) -->
+    <color name="background_light">#F5F5F5</color>
+    <color name="background_white">#FFFFFF</color>
     <color name="card_background">#FFFFFF</color>
 
     <!-- Specific UI element colors for Light Theme -->
-    <color name="edittext_border">#E0E0E0</color> <!-- Light Gray for borders -->
-    <color name="sunset_orange">#FF5722</color> <!-- Explicitly for button tint if not using primary -->
+    <color name="edittext_border">#E0E0E0</color>
+    <color name="sunset_orange">#FF5722</color>
 
     <!-- Nav Drawer Colors for Light Theme -->
-    <color name="nav_header_background_start">#FF7043</color> <!-- Lighter Orange -->
-    <color name="nav_header_background_end">#FFAB91</color>   <!-- Even Lighter Orange -->
-    <color name="nav_icon_color_light">#757575</color> <!-- Specific icon color in light mode -->
-    <color name="nav_text_color_light">#212121</color> <!-- Specific text color in light mode -->
-    <color name="nav_item_selected_bg_light">#FFF3E0</color> <!-- Very light amber for selected item -->
+    <color name="nav_header_background_start">#FF7043</color>
+    <color name="nav_header_background_end">#FFAB91</color>
+    <color name="nav_icon_color_light">#757575</color>
+    <color name="nav_text_color_light">#212121</color>
+    <color name="nav_item_selected_bg_light">#FFF3E0</color>
 
     <!-- Ripple Colors for Light Theme -->
     <color name="ripple_color">#ADD8E6</color> <!-- Light Blue -->
     <color name="ripple_highlight">#87CEEB</color> <!-- Sky Blue -->
+
+
+
+
+
 
 </resources>

@@ -38,6 +38,7 @@ public class ApiRequest {
         return instance;
     }
 
+
     public void login(String employeeCode, String password, String appId, String deviceId,
                       Response.Listener<String> listener, Response.ErrorListener errorListener) {
 
@@ -116,6 +117,7 @@ public class ApiRequest {
 
         requestQueue.add(request);
     }
+
 
     public void sendRegistration(String employeeCode, String deviceName, String uniqueId, String remarks,
                                  Response.Listener<String> listener, Response.ErrorListener errorListener) {

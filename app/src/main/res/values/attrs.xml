@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <declare-styleable name="AppTheme">
+
+
+    <attr name="dynamicColorPrimary" format="color"/>
+    <attr name="dynamicColorPrimaryDark" format="color"/>
+    <attr name="dynamicColorAccent" format="color"/>
+    <attr name="dynamicTextColorPrimary" format="color"/>
+    <attr name="dynamicTextColorSecondary" format="color"/>
+    <attr name="dynamicBackground" format="color"/>
+    <attr name="dynamicImageTint" format="color"/>
+
+
+    </declare-styleable>
+</resources>
+

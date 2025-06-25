@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@color/background_light">
+    android:background="?attr/colorOnBackground">
 
 
     <LinearLayout
+        android:background="@color/white"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,9 +21,9 @@
             android:layout_width="@dimen/profile_image_size"
             android:layout_height="@dimen/profile_image_size"
             android:layout_marginBottom="@dimen/profile_image_margin_bottom"
-            android:src="@drawable/default_profile"
-            android:scaleType="centerCrop"
-            app:tint="@color/text_white"/>
+            android:src="@mipmap/ic_launcher_foreground"
+            android:scaleType="centerCrop" />
+
 
         <EditText
             android:id="@+id/edtEmployeeCode"
@@ -34,11 +36,10 @@
             android:padding="@dimen/input_padding"
             android:layout_marginBottom="@dimen/spacing_medium"
             android:inputType="textEmailAddress"
-            android:textColor="@color/text_dark"
-            android:textColorHint="@color/text_light"
+            android:textColor="?attr/dynamicTextColorPrimary"
+            android:textColorHint="?attr/dynamicTextColorSecondary"
             android:textSize="16sp" />
 
-        <!-- Password field with inline toggle -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,8 +56,8 @@
                 android:paddingEnd="48dp"
                 android:padding="@dimen/input_padding"
                 android:inputType="textPassword"
-                android:textColor="@color/text_dark"
-                android:textColorHint="@color/text_light"
+                android:textColor="?attr/dynamicTextColorPrimary"
+                android:textColorHint="?attr/dynamicTextColorSecondary"
                 android:textSize="16sp" />
 
             <ImageView
@@ -70,16 +71,17 @@
                 android:focusable="true"
                 android:contentDescription="@string/toggle_password_visibility"
                 android:src="@drawable/ic_visibility_off"
-                app:tint="@color/text_light" />
+                app:tint="?attr/dynamicTextColorSecondary" />
         </RelativeLayout>
 
 
         <Button
             android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
+            style="@style/Widget.App.Button"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:text="Login"
-            style="@style/Widget.App.Button" />
+            android:tint="?attr/dynamicImageTint" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -94,12 +96,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Register this device"
-            android:textColor="@color/primary_500"
+            android:textColor="?attr/dynamicColorPrimary"
             android:textSize="16sp"
             android:textStyle="bold"
             android:clickable="true"
             android:focusable="true"
-            android:background="?android:attr/selectableItemBackground"
+            android:background="?attr/selectableItemBackground"
             android:layout_gravity="center"
             android:layout_marginTop="12dp"
             android:padding="8dp" />

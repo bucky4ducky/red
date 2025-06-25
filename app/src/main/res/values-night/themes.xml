@@ -1,40 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Night theme for the Red app -->
     <style name="Theme.Red" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/primary_500</item>
+        <!-- Primary brand colors -->
+        <item name="colorPrimary">@color/sunset_orange</item>
         <item name="colorPrimaryVariant">@color/primary_700</item>
-        <item name="colorOnPrimary">@color/text_white</item>
+        <item name="colorOnPrimary">@color/white</item>
 
-        <!-- Secondary brand color. -->
+        <!-- Secondary brand colors -->
         <item name="colorSecondary">@color/accent_500</item>
         <item name="colorSecondaryVariant">@color/accent_700</item>
-        <item name="colorOnSecondary">@color/text_dark</item>
+        <item name="colorOnSecondary">@color/white</item>
 
-        <!-- Status bar and navigation bar -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Surface and background -->
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/text_dark</item>
+
+        <!-- Status and navigation bar -->
+        <item name="android:statusBarColor">@color/primary_700</item>
         <item name="android:navigationBarColor">@color/background_white</item>
 
-        <!-- Text styling -->
-        <item name="android:textColor">@color/text_dark</item>
+        <!-- Text and font -->
+        <item name="android:textColorPrimary">@color/text_dark</item>
+        <item name="android:textColorSecondary">@color/text_light</item>
+        <item name="android:textColorHint">@color/text_hint</item>
         <item name="android:fontFamily">sans-serif</item>
 
-        <!-- Material Component overrides -->
+        <!-- Required for Toolbar -->
+        <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Primary</item>
+
+        <!-- Custom styles -->
         <item name="materialButtonStyle">@style/Widget.App.Button</item>
         <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
-
-        <!-- Navigation Drawer styling -->
+        <item name="materialCardViewStyle">@style/CustomCardView</item>
         <item name="textAppearanceListItem">@style/NavigationText</item>
         <item name="textAppearanceListItemSmall">@style/NavigationText</item>
 
-        <!-- CardView style -->
-        <item name="materialCardViewStyle">@style/CustomCardView</item>
+        <!-- Dynamic attributes (optional) -->
+        <item name="dynamicColorPrimary">@color/sunset_orange</item>
+        <item name="dynamicColorPrimaryDark">@color/primary_700</item>
+        <item name="dynamicColorAccent">@color/accent_500</item>
+        <item name="dynamicTextColorPrimary">@color/text_dark</item>
+        <item name="dynamicTextColorSecondary">@color/text_light</item>
+        <item name="dynamicBackground">@color/background_white</item>
+        <item name="dynamicImageTint">@color/icon_tint</item>
     </style>
 
-    <!-- Optional: no-action-bar variant for dark mode -->
     <style name="Theme.Red.NoActionBar" parent="Theme.Red">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 </resources>
+

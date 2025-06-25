@@ -1,44 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Primary Color Palette for Dark Theme -->
-    <color name="primary_500">#BF360C</color>
-    <color name="primary_700">#8D2A09</color>
-    <color name="primary_200">#FF7043</color>
 
-    <!-- Accent Color Palette for Dark Theme -->
-    <color name="accent_500">#FFD54F</color>
-    <color name="accent_700">#FFC107</color>
-    <color name="accent_200">#FFEB3B</color>
+        <color name="sunset_orange">#FF5722</color>
+        <color name="primary_700">#E64A19</color>
+        <color name="accent_500">#FFC107</color>
+        <color name="accent_700">#FFA000</color>
 
-    <!-- Text Colors for Dark Theme -->
-    <color name="text_dark">#FFFFFF</color>   <!-- White (main text) for dark mode -->
-    <color name="text_light">#BDBDBD</color>   <!-- Medium Light Gray (hint text, secondary) -->
-    <color name="text_white">#FFFFFF</color>   <!-- Pure white, used for text on primary/dark backgrounds e.g., button text -->
+        <color name="white">#FFFFFF</color>
+        <color name="text_light">#B0BEC5</color>
+        <color name="text_hint">#90A4AE</color>
 
-    <!-- Background Colors for Dark Theme -->
-    <color name="background_light">#121212</color>
-    <color name="background_white">#1E1E1E</color>
-    <color name="card_background">#1E1E1E</color>
 
-    <!-- Specific UI element colors for Dark Theme -->
-    <color name="edittext_border">#333333</color>
-    <color name="sunset_orange">@color/primary_500</color>
 
-    <!-- Nav Drawer Colors for Dark Theme -->
-    <color name="nav_header_background_start">#1F1F1F</color>
-    <color name="nav_header_background_end">#2F2F2F</color>
-    <color name="nav_icon_color_light">#BDBDBD</color>
-    <color name="nav_text_color_light">#FFFFFF</color> <!-- White for navigation text in dark mode -->
-    <color name="nav_item_selected_bg_light">#333333</color>
 
-    <!-- Ripple Colors for Dark Theme -->
-    <color name="ripple_color">#004D40</color>
-    <color name="ripple_highlight">#00796B</color>
+    <style name="Widget.App.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:backgroundTint">@color/sunset_orange</item>
+        <item name="android:textColor">?attr/dynamicTextColorPrimary</item>
+        <item name="android:padding">@dimen/button_padding</item>
+        <item name="cornerRadius">@dimen/button_corner_radius</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="elevation">4dp</item>
+    </style>
 
-    <!-- Aliases for compatibility or specific usage -->
-    <color name="button_background">@color/primary_500</color>
-    <color name="login_background">@color/background_light</color>
-    <color name="colorPrimaryDark">@color/primary_700</color>
-    <color name="nav_header_bg">@color/nav_header_background_start</color>
-    <color name="textColorPrimary">@color/text_dark</color>
+    <style name="NavigationText" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textColor">@color/nav_text_color_light</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="CustomCardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/card_background</item>
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">4dp</item>
+        <item name="contentPadding">16dp</item>
+    </style>
+
 </resources>
+

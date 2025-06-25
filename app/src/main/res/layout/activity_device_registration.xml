@@ -21,8 +21,8 @@
             android:background="@drawable/shape_edittext_bg"
             android:padding="16dp"
             android:inputType="text"
-            android:textColor="@color/text_dark"
-            android:textColorHint="@color/text_light"
+            android:textColor="?attr/dynamicTextColorPrimary"
+            android:textColorHint="?attr/dynamicTextColorSecondary"
             android:textSize="16sp" />
         <EditText
             android:id="@+id/edtRemarks"
@@ -33,8 +33,8 @@
             android:background="@drawable/shape_edittext_bg"
             android:padding="16dp"
             android:inputType="text"
-            android:textColor="@color/text_dark"
-            android:textColorHint="@color/text_light"
+            android:textColor="?attr/dynamicTextColorPrimary"
+            android:textColorHint="?attr/dynamicTextColorSecondary"
             android:textSize="16sp"
             android:layout_marginTop="16dp" />
 

@@ -26,6 +26,9 @@
         android:text="@string/nav_header_title"
         android:textStyle="bold"
         android:textSize="18sp"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+        android:textColor="?attr/colorOnPrimary"
+        android:fontFamily="sans-serif-medium" />
+
+
 
 </LinearLayout>
